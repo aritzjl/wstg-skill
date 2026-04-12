@@ -1,8 +1,8 @@
 # wstg-skill
 
-A Claude Code skill that turns any project into an auditable, OWASP WSTG-compliant codebase — with the full WSTG v4.2 checklist built in, structured evidence templates, and a security-PR protocol designed for compliance audits (SOC 2, ISO 27001, ENS, PCI-DSS).
+A Codex and Claude Code skill that turns any project into an auditable, OWASP WSTG-compliant codebase — with the full WSTG v4.2 checklist built in, structured evidence templates, and a security-PR protocol designed for compliance audits (SOC 2, ISO 27001, ENS, PCI-DSS).
 
-> **Why this exists:** OWASP WSTG is the reference standard for web security testing, but applying it to a real project means reading hundreds of pages, building checklists from scratch, and manually tracking findings. This skill gives Claude Code the methodology, the checklist, and the evidence templates so you can run a full audit and generate compliance-grade documentation from your terminal.
+> **Why this exists:** OWASP WSTG is the reference standard for web security testing, but applying it to a real project means reading hundreds of pages, building checklists from scratch, and manually tracking findings. This skill gives Codex or Claude Code the methodology, the checklist, and the evidence templates so you can run a full audit and generate compliance-grade documentation from your terminal.
 
 ## What it does
 
@@ -14,24 +14,49 @@ A Claude Code skill that turns any project into an auditable, OWASP WSTG-complia
 
 ## Installation
 
-Clone into your Claude Code skills directory:
+The installable skill lives in [`skills/wstg/`](./skills/wstg). Both Codex and Claude Code expect the final installed directory to contain `SKILL.md` at its root.
+
+### Codex
+
+Clone this repository anywhere and copy or symlink `skills/wstg` into your Codex skills directory:
 
 ```bash
-git clone https://github.com/aritzjl/wstg-skill.git ~/.claude/skills/wstg-skill
+git clone https://github.com/aritzjl/wstg-skill.git
+mkdir -p ~/.codex/skills
+cp -R wstg-skill/skills/wstg ~/.codex/skills/wstg
 ```
 
-Or install into a single project:
+Or symlink it while developing locally:
 
 ```bash
-cd your-project
-git clone https://github.com/aritzjl/wstg-skill.git .claude/skills/wstg-skill
+git clone https://github.com/aritzjl/wstg-skill.git
+mkdir -p ~/.codex/skills
+ln -s "$(pwd)/wstg-skill/skills/wstg" ~/.codex/skills/wstg
 ```
 
-Claude Code will auto-discover the skill on next launch.
+### Claude Code
+
+Clone this repository anywhere and copy or symlink `skills/wstg` into your Claude Code skills directory:
+
+```bash
+git clone https://github.com/aritzjl/wstg-skill.git
+mkdir -p ~/.claude/skills
+cp -R wstg-skill/skills/wstg ~/.claude/skills/wstg
+```
+
+Or symlink it while developing locally:
+
+```bash
+git clone https://github.com/aritzjl/wstg-skill.git
+mkdir -p ~/.claude/skills
+ln -s "$(pwd)/wstg-skill/skills/wstg" ~/.claude/skills/wstg
+```
+
+Restart Codex or Claude Code after installation so the skill is discovered.
 
 ## Usage
 
-Once installed, just talk to Claude naturally:
+Once installed, just talk to Codex or Claude naturally:
 
 ```
 > Run a WSTG audit on this project
