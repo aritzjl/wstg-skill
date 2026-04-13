@@ -8,6 +8,7 @@ Every PR that addresses a WSTG finding MUST include this block in the PR descrip
 ## Security Fix
 
 - **WSTG ID:** WSTG-v42-XXXX-YY
+- **Compliance Refs:** {{COMPLIANCE_CONTROLS}} _(e.g., ENS: op.acc.5, mp.com.3)_
 - **Issue:** {{ISSUE_TRACKER_LINK}}
 - **Severity:** Critical / High / Medium / Low / Informational
 

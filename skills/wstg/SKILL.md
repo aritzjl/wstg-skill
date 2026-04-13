@@ -51,6 +51,7 @@ This skill supports five operations. When the user's request matches one, follow
    - Read the relevant project files to evaluate the test
    - Record one of: `✅ OK` (no finding), `⚠️ Parcial` (control exists but weak), `❌ Fallo` (confirmed finding), `⬜ Pendiente` (needs manual validation), `N/A` (not applicable to this architecture)
    - If `❌ Fallo` or `⚠️ Parcial`, note the evidence (file path + line, or description of the gap)
+   - Look up the corresponding compliance controls from `references/compliance/ens-mapping.md` and populate the "Compliance Refs" column in the register row. For `❌ Fallo` and `⚠️ Parcial` results, note which specific ENS controls are impacted in the evidence field.
 5. After each category, append the results as new rows in `test-register.md` tagged with the execution name.
 6. Create an execution checklist at `docs/wstg/executions/<DATE>-<TAG>-checklist.md` using the checklist template.
 7. If any `❌ Fallo` results exist, proceed to the `finding` operation for each.
@@ -69,6 +70,7 @@ This skill supports five operations. When the user's request matches one, follow
    - Description of the vulnerability
    - How you identified it (WSTG test ID, manual discovery, tool output)
 2. Map the finding to a WSTG ID. If the user provided one, validate it exists in the reference data. If not, identify the most appropriate category and test.
+   - Look up the WSTG ID in `references/compliance/ens-mapping.md` to identify affected ENS controls. Include these in the finding record under "Compliance Refs" and in the "Compliance Impact" section.
 3. Assign severity using this rubric:
    - **Critical:** Remote code execution, authentication bypass with full access, mass data exposure
    - **High:** Privilege escalation, significant data leak, weak cryptography on sensitive data, auth bypass on specific flows
@@ -116,7 +118,18 @@ This skill supports five operations. When the user's request matches one, follow
    - Detailed findings (full description for each)
    - Remediation status
 3. Save as `docs/wstg/executions/<DATE>-<TAG>-report.md`.
-4. If the user is preparing for a compliance audit (SOC 2, ISO 27001, ENS, PCI-DSS), offer to cross-reference findings against the relevant control catalog.
+4. If the user is preparing for a compliance audit, or requests an ENS-specific view:
+   a. Ask for the system's ENS category (Basica / Media / Alta) to determine which controls apply.
+   b. Load `references/compliance/ens-mapping.md`.
+   c. Generate an "ENS Compliance Matrix" section in the report using the template from `assets/templates/ens-compliance-report.md`:
+      - For each ENS control family (op.acc, op.exp, mp.com, mp.sw, mp.info, mp.s, etc.), list:
+        - The ENS control ID and name
+        - All WSTG tests that map to it
+        - The status of each mapped test from this execution
+        - A roll-up status: if any mapped test is ❌, the control is "Non-Compliant"; if any is ⚠️, it's "Partially Compliant"; if all are ✅/N/A, it's "Compliant"
+      - Highlight ENS controls that have NO WSTG test coverage (physical, personnel, organizational) and note these require separate assessment
+   d. Generate an "ENS Findings Summary" that groups findings by ENS control rather than by WSTG category — this is the view ENS auditors expect.
+   e. If other compliance frameworks are requested and their mapping files exist in `references/compliance/`, repeat the same process for those frameworks.
 
 ## Reference data
 
@@ -136,6 +149,16 @@ The full WSTG v4.2 checklist lives in `references/wstg-v42/`, organized by categ
 | `BUSL.md` | Business Logic | 9 |
 | `CLNT.md` | Client-Side | 14 |
 | `APIT.md` | API Testing | 1 |
+
+## Compliance mapping data
+
+Cross-reference mappings from WSTG tests to compliance framework controls live in `references/compliance/`. Load the relevant mapping file when generating compliance reports or documenting findings.
+
+| File | Framework | Controls |
+|---|---|---|
+| `ens-mapping.md` | ENS (RD 311/2022) | org, op.*, mp.* |
+
+When a mapping file exists for a requested framework, compliance references are automatically included in findings, register rows, and reports. When no mapping file exists for a requested framework, inform the user and offer to document the mapping gap.
 
 ## Stack detection heuristics
 
@@ -160,6 +183,7 @@ Templates live in `assets/templates/`:
 - `checklist.md` — Per-execution checklist format
 - `findings-report.md` — Findings report format
 - `security-pr.md` — Security PR body format
+- `ens-compliance-report.md` — ENS compliance report format (used by operation 5 when ENS view is requested)
 
 When initializing a project, copy these verbatim (substituting project-specific placeholders) into the project's `docs/wstg/` directory.
 

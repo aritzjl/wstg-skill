@@ -29,9 +29,9 @@ This report documents all confirmed security findings from this audit execution.
 
 ## Findings Index
 
-| # | WSTG ID | Title | Severity | Status | Issue |
-|---|---|---|---|---|---|
-| 1 | | | | | |
+| # | WSTG ID | Title | Compliance Refs | Severity | Status | Issue |
+|---|---|---|---|---|---|---|
+| 1 | | | | | | |
 
 ---
 
@@ -42,6 +42,7 @@ Copy this block for each finding.
 ### Finding #{{N}} — {{TITLE}}
 
 - **WSTG ID:** WSTG-v42-{{CATEGORY}}-{{NN}}
+- **Compliance Refs:** {{ENS_CONTROLS}} _(from references/compliance/ens-mapping.md)_
 - **Severity:** Critical / High / Medium / Low / Informational
 - **Status:** Open / Resolved / Mitigated / Partial
 - **Issue:** {{ISSUE_TRACKER_LINK}}
@@ -84,6 +85,13 @@ Concrete impact on the system, users, or data. Avoid vague language like "securi
 - An unauthenticated attacker can authenticate as any user
 - All account data is exposed via subsequent API calls
 - No audit trail records the bypass
+
+#### Compliance Impact
+
+ENS controls affected by this finding:
+- **{{ENS_CONTROL_ID}}** — {{ENS_CONTROL_NAME}}: {{brief description of how this finding impacts the control requirement}}
+
+_(Repeat for each affected ENS control. If other compliance frameworks are relevant, add their controls here too.)_
 
 #### Recommendation
 
